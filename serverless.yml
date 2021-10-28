@@ -1,0 +1,26 @@
+service:
+  name: connectwiseworker
+
+plugins:
+  - serverless-offline
+  - serverless-webpack
+
+custom:
+  webpack:
+    webpackConfig: ./webpack.config.js
+    includeModules: true
+
+provider:
+  name: aws
+  # memorySize: 256
+  # runtime: nodejs14.x
+  # region: sa-east-1
+
+functions:
+  blacklistCC:
+    handler: src/functions/tickets/blacklistCC.handle
+    events:
+      - http:
+          path: /tickets/blacklistCC
+          method: POST
+          cors: true
