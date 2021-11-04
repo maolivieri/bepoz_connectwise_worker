@@ -30,24 +30,34 @@ export const handle: APIGatewayProxyHandler = async (event) => {
     .replace("workshop@bepoz.com.au;", "");
 
   // UPDATE TICKET CC SECTION
-  await api.patch(
-    `/service/tickets/${id}`,
-    JSON.stringify([
-      {
-        op: "replace",
-        path: "automaticEmailCc",
-        value: after,
-      },
-    ])
-  );
+
+  if (before !== after) {
+    await api.patch(
+      `/service/tickets/${id}`,
+      JSON.stringify([
+        {
+          op: "replace",
+          path: "automaticEmailCc",
+          value: after,
+        },
+      ])
+    );
+  }
 
   return {
     statusCode: 200,
-    body: JSON.stringify({
-      message: before === after ? "no changes" : "blacklisted",
-      before,
-      after,
-    }),
+    body:
+      before === after
+        ? JSON.stringify({
+            message: "no changes",
+            before,
+            after,
+          })
+        : JSON.stringify({
+            message: "blacklisted",
+            before,
+            after,
+          }),
     headers: {
       "content-type": "application/json",
     },
