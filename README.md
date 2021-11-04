@@ -7,7 +7,10 @@
     - If one of the following emails are added to the 'cc' section of a ticket:
         - accounts@bepoz.com.au
         - support@bepoz.com.au
+        - support@bepoz.co.nz
+        - support@bepoz.co.uk
         - support@vectron.com.au
         - workshop@bepoz.com.au
+        - workshop@vectron.com.au
     - Then the funtion will run and remove those emails from the 'cc' section.
     - The ticket gets updated using the ticket PATCH API.
