@@ -12,9 +12,9 @@ custom:
 
 provider:
   name: aws
-  # memorySize: 256
-  # runtime: nodejs14.x
-  # region: sa-east-1
+  memorySize: 256
+  runtime: nodejs14.x
+  region: sa-east-1
 
 functions:
   blacklistCC:
