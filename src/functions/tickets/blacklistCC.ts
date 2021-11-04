@@ -10,11 +10,12 @@ export const handle: APIGatewayProxyHandler = async (event) => {
   const { Entity } = JSON.parse(event.body) as ICWCallback;
 
   if (!Entity) {
+    throw new Error("API Failed");
   }
 
   const { automaticEmailCc, id } = JSON.parse(Entity);
 
-  if (!automaticEmailCc || !id) {
+  if (!automaticEmailCc || !id || automaticEmailCc === "") {
     throw new Error("API Failed");
   }
 
@@ -24,8 +25,11 @@ export const handle: APIGatewayProxyHandler = async (event) => {
     .replace("support@bepoz.com.au;", "")
     .replace("support@vectron.com.au;", "")
     .replace("support@bepoz.co.nz;", "")
-    .replace("workshop@vectron.com.au;", "");
+    .replace("support@bepoz.co.uk;", "")
+    .replace("workshop@vectron.com.au;", "")
+    .replace("workshop@bepoz.com.au;", "");
 
+  // UPDATE TICKET CC SECTION
   await api.patch(
     `/service/tickets/${id}`,
     JSON.stringify([
@@ -38,9 +42,9 @@ export const handle: APIGatewayProxyHandler = async (event) => {
   );
 
   return {
-    statusCode: 201,
+    statusCode: 200,
     body: JSON.stringify({
-      message: "No Changes made",
+      message: before === after ? "no changes" : "blacklisted",
       before,
       after,
     }),
