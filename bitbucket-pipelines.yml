@@ -9,5 +9,5 @@ pipelines:
           script:
             - npm install -g serverless
             - npm install
-            - serverless config credentials --stage dev --provider aws --key ${AWS_ACCESS_KEY} --secret ${AWS_SECRET_KEY}
-            - serverless deploy --stage prod
+            - serverless config credentials --provider aws --key=${AWS_ACCESS_KEY} --secret ${AWS_SECRET_KEY} -o
+            - serverless deploy
