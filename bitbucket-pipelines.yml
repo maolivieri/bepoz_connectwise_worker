@@ -2,7 +2,7 @@ image: node:14-alpine
 
 pipelines:
   branches:
-    master:
+    main:
       - step:
           caches:
             - node
