@@ -9,16 +9,30 @@ interface ICWCallback {
 export const handle: APIGatewayProxyHandler = async (event) => {
   const { Entity } = JSON.parse(event.body) as ICWCallback;
 
-  console.log(event.body);
-
   if (!Entity) {
-    throw new Error("API Failed");
+    return {
+      statusCode: 200,
+      body: JSON.stringify({
+        message: "NO ENTITY",
+      }),
+      headers: {
+        "content-type": "application/json",
+      },
+    };
   }
 
   const { automaticEmailCc, id } = JSON.parse(Entity);
 
   if (!automaticEmailCc || !id || automaticEmailCc === "") {
-    throw new Error("API Failed");
+    return {
+      statusCode: 200,
+      body: JSON.stringify({
+        message: "NO CC's",
+      }),
+      headers: {
+        "content-type": "application/json",
+      },
+    };
   }
 
   const before = automaticEmailCc;
@@ -33,9 +47,6 @@ export const handle: APIGatewayProxyHandler = async (event) => {
 
   // UPDATE TICKET CC SECTION
 
-  console.log(before);
-  console.log(after);
-
   if (before !== after) {
     try {
       await api.patch(
@@ -49,7 +60,15 @@ export const handle: APIGatewayProxyHandler = async (event) => {
         ])
       );
     } catch (error) {
-      throw new Error("API Failed");
+      return {
+        statusCode: 200,
+        body: JSON.stringify({
+          message: "CW API HAS FAILED",
+        }),
+        headers: {
+          "content-type": "application/json",
+        },
+      };
     }
   }
 
