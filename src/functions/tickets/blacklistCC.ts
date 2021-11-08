@@ -31,17 +31,24 @@ export const handle: APIGatewayProxyHandler = async (event) => {
 
   // UPDATE TICKET CC SECTION
 
+  console.log(before);
+  console.log(after);
+
   if (before !== after) {
-    await api.patch(
-      `/service/tickets/${id}`,
-      JSON.stringify([
-        {
-          op: "replace",
-          path: "automaticEmailCc",
-          value: after,
-        },
-      ])
-    );
+    try {
+      await api.patch(
+        `/service/tickets/${id}`,
+        JSON.stringify([
+          {
+            op: "replace",
+            path: "automaticEmailCc",
+            value: after,
+          },
+        ])
+      );
+    } catch (error) {
+      throw new Error("API Failed");
+    }
   }
 
   return {
