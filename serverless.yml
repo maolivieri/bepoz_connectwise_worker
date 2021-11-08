@@ -12,7 +12,7 @@ custom:
 
 provider:
   name: aws
-  memorySize: 256
+  memorySize: 1024
   runtime: nodejs14.x
   region: ap-southeast-2
 
