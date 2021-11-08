@@ -9,6 +9,8 @@ interface ICWCallback {
 export const handle: APIGatewayProxyHandler = async (event) => {
   const { Entity } = JSON.parse(event.body) as ICWCallback;
 
+  console.log(event.body);
+
   if (!Entity) {
     throw new Error("API Failed");
   }
